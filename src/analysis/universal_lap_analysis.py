@@ -44,10 +44,36 @@ print(f"   + Features: {', '.join(feature_cols[:15])}{'...' if len(feature_cols)
 # Clean data: first check column completeness
 df_model = df_clean[['lap_time_seconds', 'track', 'track_name', 'race', 'vehicle_id'] + feature_cols].copy()
 
-# Remove outlier lap times (keep laps between 30s and 600s - 10 minutes)
-print(f"\n   Filtering outlier lap times...")
+# Remove outlier lap times with track-specific filtering
+print(f"\n   Filtering outlier lap times (track-specific)...")
 print(f"   Before: {len(df_model)} laps (range: {df_model['lap_time_seconds'].min():.1f}s - {df_model['lap_time_seconds'].max():.1f}s)")
-df_model = df_model[(df_model['lap_time_seconds'] >= 30) & (df_model['lap_time_seconds'] <= 600)]
+
+# Track-specific reasonable lap time ranges (in seconds)
+track_ranges = {
+    'barber': (80, 110),           # Barber Motorsports Park: ~90s typical
+    'COTA': (130, 230),             # Circuit of the Americas: ~170s typical
+    'indianapolis': (80, 150),      # Indianapolis Motor Speedway: ~110s typical
+    'road-america': (130, 230),     # Road America: ~170s typical
+    'sebring': (120, 180),          # Sebring: ~150s typical
+    'Sonoma': (80, 150),            # Sonoma Raceway: ~120s typical (tighter filter)
+    'virginia-international-raceway': (110, 180)  # VIR: ~140s typical
+}
+
+# Apply track-specific filtering
+filtered_dfs = []
+for track, (min_time, max_time) in track_ranges.items():
+    track_data = df_model[df_model['track'] == track]
+    if len(track_data) > 0:
+        before = len(track_data)
+        track_filtered = track_data[(track_data['lap_time_seconds'] >= min_time) &
+                                     (track_data['lap_time_seconds'] <= max_time)]
+        after = len(track_filtered)
+        removed = before - after
+        pct_kept = (after / before * 100) if before > 0 else 0
+        print(f"   {track:30s}: {after:4d}/{before:4d} laps kept ({pct_kept:5.1f}%) | removed {removed:3d} outliers")
+        filtered_dfs.append(track_filtered)
+
+df_model = pd.concat(filtered_dfs, ignore_index=True)
 print(f"   After: {len(df_model)} laps (range: {df_model['lap_time_seconds'].min():.1f}s - {df_model['lap_time_seconds'].max():.1f}s)")
 
 # Check how complete each column is
