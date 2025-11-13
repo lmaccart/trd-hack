@@ -10,7 +10,7 @@ print("="*80)
 
 # Load data
 print("\nLoading data...")
-df = pd.read_csv('merged_lap_telemetry.csv')
+df = pd.read_csv('../../data/processed/merged_lap_telemetry.csv')
 print(f"Original dataset: {len(df)} laps")
 
 # Display current distribution
@@ -83,10 +83,10 @@ if len(vehicle_counts) > 10:
     print(f"  ... and {len(vehicle_counts) - 10} more vehicles")
 
 # Save cleaned data
-output_file = 'merged_lap_telemetry_CLEAN.csv'
+output_file = '../../data/processed/merged_lap_telemetry_CLEAN.csv'
 df_clean.to_csv(output_file, index=False)
 print(f"\n{'='*80}")
-print(f"Saved cleaned data to: {output_file}")
+print(f"Saved cleaned data to: data/processed/merged_lap_telemetry_CLEAN.csv")
 print(f"{'='*80}")
 
 # Create a summary of what was removed
@@ -118,11 +118,11 @@ print(f"\n{'='*80}")
 print(f"NEXT STEPS")
 print(f"{'='*80}")
 print("1. Re-run analysis with cleaned data:")
-print("   Update 'merged_lap_telemetry.csv' reference to 'merged_lap_telemetry_CLEAN.csv'")
-print("   in advanced_lap_optimization.py and optimization_dashboard.py")
+print("   Update path in advanced_lap_optimization.py and optimization_dashboard.py")
+print("   to use 'data/processed/merged_lap_telemetry_CLEAN.csv'")
 print("")
 print("2. Or use this cleaned data for new analysis:")
-print("   df = pd.read_csv('merged_lap_telemetry_CLEAN.csv')")
+print("   df = pd.read_csv('data/processed/merged_lap_telemetry_CLEAN.csv')")
 print("")
 print("3. Consider additional filtering:")
 print(f"   - Further narrow lap time range if needed")

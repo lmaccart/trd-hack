@@ -17,12 +17,12 @@ st.markdown("**How Weather Impacts Performance**")
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv('merged_lap_telemetry_with_weather.csv')
-    with open('optimization_results.json', 'r') as f:
+    df = pd.read_csv('../../data/processed/merged_lap_telemetry_with_weather.csv')
+    with open('../../data/results/optimization_results.json', 'r') as f:
         opt_results = json.load(f)
-    with open('weather_analysis.json', 'r') as f:
+    with open('../../data/results/weather_analysis.json', 'r') as f:
         weather_results = json.load(f)
-    feature_importance = pd.read_csv('feature_importance.csv')
+    feature_importance = pd.read_csv('../../data/results/feature_importance.csv')
     return df, opt_results, weather_results, feature_importance
 
 try:
@@ -373,7 +373,7 @@ try:
     with col3:
         # Load weather comparison if exists
         try:
-            weather_comp = pd.read_csv('weather_fast_vs_slow.csv')
+            weather_comp = pd.read_csv('../../data/results/weather_fast_vs_slow.csv')
             weather_comp_csv = weather_comp.to_csv(index=False).encode('utf-8')
             st.download_button(
                 label="Download Weather Fast vs Slow",

@@ -18,7 +18,7 @@ print("="*80)
 # STEP 1: LOAD AND PREPARE DATA
 # ============================================================================
 print("\n[1/6] Loading data...")
-df = pd.read_csv('merged_lap_telemetry.csv')
+df = pd.read_csv('../../data/processed/merged_lap_telemetry.csv')
 print(f"   + Loaded {len(df)} laps from {df['vehicle_number'].nunique()} vehicles")
 
 # ============================================================================
@@ -249,11 +249,11 @@ results = {
 }
 
 import json
-with open('optimization_results.json', 'w') as f:
+with open('../../data/results/optimization_results.json', 'w') as f:
     json.dump(results, f, indent=2)
 
 # Save feature importance
-feature_importance.to_csv('feature_importance.csv', index=False)
+feature_importance.to_csv('../../data/results/feature_importance.csv', index=False)
 
 # Save comparison
 comparison_df = pd.DataFrame({
@@ -263,14 +263,14 @@ comparison_df = pd.DataFrame({
 })
 comparison_df['difference'] = comparison_df['fast_laps_mean'] - comparison_df['slow_laps_mean']
 comparison_df['pct_difference'] = (comparison_df['difference'] / comparison_df['slow_laps_mean'] * 100)
-comparison_df.to_csv('fast_vs_slow_comparison.csv', index=False)
+comparison_df.to_csv('../../data/results/fast_vs_slow_comparison.csv', index=False)
 
 print("\n" + "="*80)
 print("SAVED FILES:")
 print("="*80)
-print("+ optimization_results.json       - Complete analysis results")
-print("+ feature_importance.csv          - Feature importance rankings")
-print("+ fast_vs_slow_comparison.csv     - Fast vs slow lap comparison")
+print("+ data/results/optimization_results.json       - Complete analysis results")
+print("+ data/results/feature_importance.csv          - Feature importance rankings")
+print("+ data/results/fast_vs_slow_comparison.csv     - Fast vs slow lap comparison")
 print("="*80)
 
 # ============================================================================

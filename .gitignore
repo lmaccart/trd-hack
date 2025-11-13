@@ -1,6 +1,21 @@
 .streamlit/secrets.toml
 
-datasets/
+# Data files (raw datasets and generated files)
+# Track directory structure first
+!data/
+!data/raw/
+!data/processed/
+!data/results/
+!.gitkeep
+
+# Then ignore specific data files
+data/raw/datasets/
+data/processed/*.csv
+data/results/*.json
+data/results/*.csv
+
+# macOS
+.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

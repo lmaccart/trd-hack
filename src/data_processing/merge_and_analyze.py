@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 print("Loading telemetry data...")
-df_long = pd.read_csv('datasets/indianapolis/R1_indianapolis_motor_speedway_telemetry.csv')
+df_long = pd.read_csv('../../data/raw/datasets/indianapolis/R1_indianapolis_motor_speedway_telemetry.csv')
 
 print("Transforming to wide format...")
 df_wide = df_long.pivot_table(
@@ -16,7 +16,7 @@ df_wide.columns.name = None
 print(f"Wide telemetry shape: {df_wide.shape}")
 
 print("\nLoading lap timing data...")
-lap_time = pd.read_csv('datasets/indianapolis/R1_indianapolis_motor_speedway_lap_time.csv')
+lap_time = pd.read_csv('../../data/raw/datasets/indianapolis/R1_indianapolis_motor_speedway_lap_time.csv')
 
 # Convert timestamp to datetime
 lap_time['timestamp'] = pd.to_datetime(lap_time['timestamp'])
@@ -68,8 +68,8 @@ print(f"Merged dataframe shape: {merged_df.shape}")
 print(f"\nColumns: {merged_df.columns.tolist()}")
 
 # Save merged dataframe
-merged_df.to_csv('merged_lap_telemetry.csv', index=False)
-print("\nSaved merged data to: merged_lap_telemetry.csv")
+merged_df.to_csv('../../data/processed/merged_lap_telemetry.csv', index=False)
+print("\nSaved merged data to: data/processed/merged_lap_telemetry.csv")
 
 # Calculate correlations
 print("\n" + "="*80)
@@ -96,7 +96,7 @@ for i, (col, corr) in enumerate(sorted_corr[:3], 1):
     print(f"{i}. {col:20s}: {corr:+.4f}")
 
 # Save correlation results
-with open('correlation_results.txt', 'w') as f:
+with open('../../docs/correlation_results.txt', 'w') as f:
     f.write("CORRELATION ANALYSIS: Telemetry vs Lap Time\n")
     f.write("="*80 + "\n\n")
     for col, corr in sorted_corr:
@@ -107,16 +107,16 @@ with open('correlation_results.txt', 'w') as f:
     for i, (col, corr) in enumerate(sorted_corr[:3], 1):
         f.write(f"{i}. {col:20s}: {corr:+.4f}\n")
 
-print("\nSaved correlation results to: correlation_results.txt")
+print("\nSaved correlation results to: docs/correlation_results.txt")
 
 # Save top 3 variables for streamlit
 import json
 top_3_vars = [col for col, _ in sorted_corr[:3]]
-with open('top_correlations.json', 'w') as f:
+with open('../../data/results/top_correlations.json', 'w') as f:
     json.dump({
         'top_3_variables': top_3_vars,
         'correlations': dict(sorted_corr[:3])
     }, f, indent=2)
 
-print(f"\nTop 3 variables saved to: top_correlations.json")
+print(f"\nTop 3 variables saved to: data/results/top_correlations.json")
 print(f"Top 3: {top_3_vars}")

@@ -10,10 +10,10 @@ echo "Press Ctrl+C to stop both dashboards"
 echo ""
 
 # Start both dashboards in background
-./venv/bin/streamlit run weather_dashboard.py --server.port 8501 &
+../venv/bin/streamlit run ../src/dashboards/weather_dashboard.py --server.port 8501 &
 WEATHER_PID=$!
 
-./venv/bin/streamlit run optimization_dashboard.py --server.port 8502 &
+../venv/bin/streamlit run ../src/dashboards/optimization_dashboard.py --server.port 8502 &
 OPT_PID=$!
 
 # Wait for user to press Ctrl+C

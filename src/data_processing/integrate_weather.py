@@ -42,7 +42,7 @@ print(f"   - Rain: {'YES' if weather_df['RAIN'].max() > 0 else 'NO'}")
 # STEP 2: LOAD LAP DATA
 # ============================================================================
 print("\n[2/5] Loading lap data...")
-lap_df = pd.read_csv('merged_lap_telemetry.csv')
+lap_df = pd.read_csv('../../data/processed/merged_lap_telemetry.csv')
 lap_df['timestamp'] = pd.to_datetime(lap_df['timestamp'])
 
 print(f"   + Loaded {len(lap_df)} laps")
@@ -187,9 +187,9 @@ else:
 print("\n[5/5] Saving results...")
 
 # Save merged data
-output_file = 'merged_lap_telemetry_with_weather.csv'
+output_file = '../../data/processed/merged_lap_telemetry_with_weather.csv'
 merged_df.to_csv(output_file, index=False)
-print(f"   + Saved: {output_file}")
+print(f"   + Saved: data/processed/merged_lap_telemetry_with_weather.csv")
 
 # Save correlation results
 if len(correlations) > 0:
@@ -206,9 +206,9 @@ if len(correlations) > 0:
         'total_laps': int(len(merged_df))
     }
 
-    with open('weather_analysis.json', 'w') as f:
+    with open('../../data/results/weather_analysis.json', 'w') as f:
         json.dump(weather_results, f, indent=2)
-    print(f"   + Saved: weather_analysis.json")
+    print(f"   + Saved: data/results/weather_analysis.json")
 
 # Create weather impact summary
 if len(correlations) > 0:
@@ -243,16 +243,16 @@ if len(correlations) > 0:
 
     # Save comparison
     weather_comparison_df = pd.DataFrame(weather_comparison)
-    weather_comparison_df.to_csv('weather_fast_vs_slow.csv', index=False)
-    print(f"\n   + Saved: weather_fast_vs_slow.csv")
+    weather_comparison_df.to_csv('../../data/results/weather_fast_vs_slow.csv', index=False)
+    print(f"\n   + Saved: data/results/weather_fast_vs_slow.csv")
 
 print("\n" + "="*80)
 print("WEATHER INTEGRATION COMPLETE!")
 print("="*80)
 print("\nNext steps:")
-print("1. Use 'merged_lap_telemetry_with_weather.csv' for analysis")
-print("2. Check 'weather_analysis.json' for correlation results")
+print("1. Use 'data/processed/merged_lap_telemetry_with_weather.csv' for analysis")
+print("2. Check 'data/results/weather_analysis.json' for correlation results")
 print("3. Run updated dashboard with weather data")
 print("\nTo update existing analysis scripts:")
-print("   Change: pd.read_csv('merged_lap_telemetry.csv')")
-print("   To:     pd.read_csv('merged_lap_telemetry_with_weather.csv')")
+print("   Change: pd.read_csv('data/processed/merged_lap_telemetry.csv')")
+print("   To:     pd.read_csv('data/processed/merged_lap_telemetry_with_weather.csv')")

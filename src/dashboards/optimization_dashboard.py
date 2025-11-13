@@ -17,11 +17,11 @@ st.markdown("**Predictive Analysis for Performance Improvement**")
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv('merged_lap_telemetry.csv')
-    with open('optimization_results.json', 'r') as f:
+    df = pd.read_csv('../../data/processed/merged_lap_telemetry.csv')
+    with open('../../data/results/optimization_results.json', 'r') as f:
         opt_results = json.load(f)
-    feature_importance = pd.read_csv('feature_importance.csv')
-    comparison = pd.read_csv('fast_vs_slow_comparison.csv')
+    feature_importance = pd.read_csv('../../data/results/feature_importance.csv')
+    comparison = pd.read_csv('../../data/results/fast_vs_slow_comparison.csv')
     return df, opt_results, feature_importance, comparison
 
 try:
